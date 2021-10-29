@@ -945,5 +945,10 @@ namespace WebService.MnbServiceReference {
             inValue.GetInfo = GetInfo;
             return ((WebService.MnbServiceReference.MNBArfolyamServiceSoap)(this)).GetInfoAsync(inValue);
         }
+
+        internal object GetCurrencies(GetCurrenciesRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
