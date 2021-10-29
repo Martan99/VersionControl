@@ -27,6 +27,7 @@ namespace WebService
 
         private void RefreshData()
         {
+            Rates.Clear();
             chartRateData.DataSource = Rates;
             dataGridView1.DataSource = Rates;
             var result = GetExchangeResult();
