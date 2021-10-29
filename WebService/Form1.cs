@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 using WebService.Entities;
 using WebService.MnbServiceReference;
 
@@ -22,9 +23,36 @@ namespace WebService
             DataGridView RatesDGV = new DataGridView();
             ActiveForm.Controls.Add(RatesDGV);
             RatesDGV.DataSource = Rates;
+            var result = GetExchangeResult();
+            ReadXml(result);
         }
 
-        private void ss()
+        private void ReadXml(string xmlResult)
+        {
+            var xml = new XmlDocument();
+            xml.LoadXml(xmlResult);
+
+            foreach (XmlElement element in xml.DocumentElement)
+            {
+                var rate = new RateData();
+                Rates.Add(rate);
+
+                // Dátum
+                rate.Date = DateTime.Parse(element.GetAttribute("date"));
+
+                // Valuta
+                var childElement = (XmlElement)element.ChildNodes[0];
+                rate.Currency = childElement.GetAttribute("curr");
+
+                // Érték
+                var unit = decimal.Parse(childElement.GetAttribute("unit"));
+                var value = decimal.Parse(childElement.InnerText);
+                if (unit != 0)
+                    rate.Value = value / unit;
+            }
+        }
+
+        private string GetExchangeResult()
         {
             var mnbService = new MNBArfolyamServiceSoapClient();
 
@@ -38,6 +66,7 @@ namespace WebService
             var response = mnbService.GetExchangeRates(request);
 
             var result = response.GetExchangeRatesResult;
+            return result;
         }
     }
 }
