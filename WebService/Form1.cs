@@ -21,6 +21,12 @@ namespace WebService
         public Form1()
         {
             InitializeComponent();
+
+            RefreshData();
+        }
+
+        private void RefreshData()
+        {
             chartRateData.DataSource = Rates;
             dataGridView1.DataSource = Rates;
             var result = GetExchangeResult();
@@ -73,18 +79,34 @@ namespace WebService
         private string GetExchangeResult()
         {
             var mnbService = new MNBArfolyamServiceSoapClient();
-
+            comboBox1.SelectedItem = comboBox1.Items[0];
+            
             var request = new GetExchangeRatesRequestBody()
             {
-                currencyNames = "EUR",
-                startDate = "2020-01-01",
-                endDate = "2020-06-30"
+                currencyNames = comboBox1.SelectedItem.ToString(),
+                startDate = dateTimePicker1.Value.ToString("yyyy-MM-dd"),
+                endDate = dateTimePicker2.Value.ToString("yyyy-MM-dd"),
             };
 
             var response = mnbService.GetExchangeRates(request);
 
             var result = response.GetExchangeRatesResult;
             return result;
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshData();
         }
     }
 }
