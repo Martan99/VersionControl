@@ -19,7 +19,9 @@ namespace WebService
         public Form1()
         {
             InitializeComponent();
-
+            DataGridView RatesDGV = new DataGridView();
+            ActiveForm.Controls.Add(RatesDGV);
+            RatesDGV.DataSource = Rates;
         }
 
         private void ss()
