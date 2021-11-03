@@ -63,8 +63,11 @@ namespace FactoryPattern
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Factory = new BallFactory();
-            
+            Factory = new BallFactory
+            {
+                BallColor = button2.BackColor
+            };
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -90,7 +93,7 @@ namespace FactoryPattern
             colorPicker.Color = button.BackColor;
             if (colorPicker.ShowDialog() != DialogResult.OK)
                 return;
-            button.BackColor = colorPicker.Color;
+            button2.BackColor = colorPicker.Color;
         }
     }
 }
