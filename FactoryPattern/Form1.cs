@@ -95,5 +95,14 @@ namespace FactoryPattern
                 return;
             button2.BackColor = colorPicker.Color;
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Factory = new PresentFactory
+            {
+                PColor = button2.BackColor,
+                PColor1 = Color.Red,
+            };
+        }
     }
 }
