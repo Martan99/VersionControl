@@ -1,4 +1,6 @@
-﻿namespace UnitTestExample.Test
+﻿using NUnit.Framework;
+
+namespace UnitTestExample.Test
 {
     public class AccountControllerTestFixture
     {
